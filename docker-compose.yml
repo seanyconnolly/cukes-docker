@@ -1,0 +1,66 @@
+version: "2"
+services:
+  postgres:
+    image: suirtech/docker_postgres:init
+    container_name: postgres_container
+    volumes:
+      -  /docker-postgres:/var/lib/postgresql
+      -  /docker-postgres/data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: cuke_results
+      DB_HOST: postgresql
+      DB_PORT: 5432
+    networks:
+      - backend
+  cukes:
+    container_name: cukes_container
+    image: suirtech/cuke-results
+    ports:
+      - "7002:7002"
+    networks:
+      - backend
+    links:
+      - postgres
+    environment:
+          SPRING_APPLICATION_JSON: '{
+          "spring.jpa.database-platform" : "org.hibernate.dialect.PostgreSQL94Dialect",
+          "spring.datasource.url" : "jdbc:postgresql://postgres:5432/cuke_results",
+          "spring.datasource.username" : "postgres",
+          "spring.datasource.password" : "password",
+          "spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation" : "true",
+          "spring.jpa.hibernate.ddl-auto" : "update",
+          "spring.jpa.show-sql" : "true"
+          }'
+  cukesapp:
+    container_name: cukes_app_container
+    image: suirtech/cukes-app
+    ports:
+      - "7003:80"
+    networks:
+      - backend
+    links:
+      - cukes
+  pgadmin:
+    container_name: pgadmin_container
+    links:
+      - postgres
+    image: fenglc/pgadmin4
+    volumes:
+       - /docker-pgadmin/root:/root/.pgadmin
+       - /docker-pgadmin/var:/var/lib/pgadmin
+    ports:
+      - "5050:5050"
+    links:
+      - postgres
+    networks:
+      - backend
+    restart: unless-stopped
+
+
+networks:
+  backend:
+    driver: bridge

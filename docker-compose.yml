@@ -53,7 +53,7 @@ services:
       - backend
   jenkins:
     container_name: jenkins_auto_container
-    image: 'bitnami/jenkins:latest'
+    image: 'suirtech/jenkins_auto'
     ports:
       - '7004:8080'
       - '50000:50000'

@@ -44,6 +44,13 @@ services:
       - backend
     links:
       - cukes
+  userapp:
+    container_name: user_app_container
+    image: suirtech/user-app
+    ports:
+      - "7001:7001"
+    networks:
+      - backend
   pgadmin:
     container_name: pgadmin_container
     links:

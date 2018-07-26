@@ -51,6 +51,16 @@ services:
       - "7001:7001"
     networks:
       - backend
+  jenkins:
+    container_name: jenkins_auto_container
+    image: 'bitnami/jenkins:latest'
+    ports:
+      - '7004:8080'
+      - '50000:50000'
+    networks:
+      - backend
+    volumes:
+      - '/jenkins_data:/bitnami/jenkins'
   pgadmin:
     container_name: pgadmin_container
     links:

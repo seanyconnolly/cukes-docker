@@ -39,7 +39,7 @@ services:
     container_name: cukes_app_container
     image: suirtech/cukes-app
     ports:
-      - "7003:80"
+      - "80:80"
     networks:
       - backend
     links:

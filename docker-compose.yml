@@ -1,5 +1,17 @@
 version: "2"
 services:
+  youtrack:
+    image: suirtech/youtrack
+    container_name: youtrack_container
+    volumes:
+      - /docker-youtrack:/opt/youtrack/data
+      - /docker-youtrack:/opt/youtrack/conf
+      - /docker-youtrack:/opt/youtrack/logs
+      - /docker-youtrack:/opt/youtrack/backups
+    ports:
+      - "7005:8080"
+    networks:
+      - backend
   postgres:
     image: suirtech/docker_postgres:init
     container_name: postgres_container

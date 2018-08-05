@@ -17,8 +17,8 @@ services:
     networks:
       - backend
   grafana:
-    image: suirtech/grafana
-    container_name: stgrafana
+    image: grafana/grafana
+    container_name: stg
     ports:
       - "3000:3000"
     user: "104"

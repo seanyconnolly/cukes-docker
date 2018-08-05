@@ -13,7 +13,7 @@ services:
     volumes:
       # Data persistency
       # sudo mkdir -p /srv/docker/influxdb/data
-      - ~/docker/influxdb/data:/var/lib/influxdb
+      - /srv/docker/influxdb/data:/var/lib/influxdb
     networks:
       - backend
   grafana:
@@ -24,12 +24,14 @@ services:
     user: "104"
     env_file:
       - 'env.grafana'
+    depends_on:
+      - influxdb
     links:
       - influxdb
     volumes:
       # Data persistency
       # sudo mkdir -p /srv/docker/grafana/data; chown 472:472 /srv/docker/grafana/data
-      - ~/docker/grafana/data:/var/lib/grafana
+      - /srv/docker/grafana/data:/var/lib/grafana
     networks:
       - backend
   telegraf:

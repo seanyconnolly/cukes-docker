@@ -16,7 +16,7 @@ services:
       - ~/docker/influxdb/data:/var/lib/influxdb
   grafana:
     image: grafana/grafana:latest
-    container_name: grafana
+    container_name: stgrafana
     ports:
       - "3000:3000"
     user: "104"

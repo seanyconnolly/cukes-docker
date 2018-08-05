@@ -10,10 +10,10 @@ services:
       - "8090:8090"
     env_file:
       - 'env.influxdb'
-    volumes:
-      # Data persistency
-      # sudo mkdir -p /srv/docker/influxdb/data
-      - /srv/docker/influxdb/data:/var/lib/influxdb
+    # volumes:
+    #   # Data persistency
+    #   # sudo mkdir -p /srv/docker/influxdb/data
+    #   - /srv/docker/influxdb/data:/var/lib/influxdb
     networks:
       - backend
   grafana:
@@ -21,17 +21,17 @@ services:
     container_name: stg
     ports:
       - "3000:3000"
-    user: "104"
-    env_file:
-      - 'env.grafana'
+    # user: "104"
+    # env_file:
+    #   - 'env.grafana'
     depends_on:
       - influxdb
     links:
       - influxdb
-    volumes:
-      # Data persistency
-      # sudo mkdir -p /srv/docker/grafana/data; chown 472:472 /srv/docker/grafana/data
-      - /srv/docker/grafana/data:/var/lib/grafana
+    # volumes:
+    #   # Data persistency
+    #   # sudo mkdir -p /srv/docker/grafana/data; chown 472:472 /srv/docker/grafana/data
+    #   - /srv/docker/grafana/data:/var/lib/grafana
     networks:
       - backend
   telegraf:
